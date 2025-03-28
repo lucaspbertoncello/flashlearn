@@ -1,0 +1,18 @@
+CREATE DATABASE flashlearn;
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE IF NOT EXISTS decks (
+  id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+  name TEXT NOT NULL UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS flashcards (
+  id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+  question TEXT NOT NULL,
+  answer TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  deck_id UUID,
+  FOREIGN KEY(deck_id) REFERENCES decks(id)
+);
