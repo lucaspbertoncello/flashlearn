@@ -2,13 +2,14 @@ const DeckRepository = require("../repositories/DeckRepository");
 
 class DeckController {
   async index(req, res) {
-    const result = await DeckRepository.findAll();
-    res.json(result);
+    const decks = await DeckRepository.findAll();
+    res.json(decks);
   }
 
-  show(req, res) {
+  async show(req, res) {
     const { id } = req.params;
-    res.send(`Listando contato com id ${id}`);
+    const deck = await DeckRepository.findById(id);
+    res.json(deck);
   }
 
   store(req, res) {
