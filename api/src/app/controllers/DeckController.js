@@ -58,7 +58,16 @@ class DeckController {
   }
 
   async delete(req, res) {
-    res.send("Deletando um deck.");
+    const { id } = req.params;
+
+    const deckExists = await DeckRepository.findById(id);
+
+    if (!deckExists) {
+      return res.status(404).json({ error: "Deck not found" });
+    }
+
+    await DeckRepository.deleteById(id);
+    res.sendStatus(204);
   }
 }
 

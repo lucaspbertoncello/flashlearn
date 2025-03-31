@@ -42,6 +42,11 @@ class DeckRepository {
 
     return row;
   }
+
+  async deleteById(id) {
+    const deleteOp = await db.query(`DELETE FROM decks WHERE id = $1`, [id]);
+    return deleteOp;
+  }
 }
 
 module.exports = new DeckRepository();
