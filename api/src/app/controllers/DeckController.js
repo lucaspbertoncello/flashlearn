@@ -9,18 +9,36 @@ class DeckController {
   async show(req, res) {
     const { id } = req.params;
     const deck = await DeckRepository.findById(id);
+
+    if (!deck) {
+      return res.status(404).json({ error: "Deck not found" });
+    }
+
     res.json(deck);
   }
 
-  store(req, res) {
-    res.send("Criando um deck.");
+  async store(req, res) {
+    const { name } = req.body;
+
+    if (!name) {
+      res.status(400).json({ error: "Name is required" });
+    }
+
+    const nameAlreadyExists = await DeckRepository.findByName(name);
+
+    if (nameAlreadyExists) {
+      res.status(400).json({ error: "This name is already in use" });
+    }
+
+    const deck = await DeckRepository.create(name);
+    res.json(deck);
   }
 
-  update(req, res) {
+  async update(req, res) {
     res.send("Atualizando um deck.");
   }
 
-  delete(req, res) {
+  async delete(req, res) {
     res.send("Deletando um deck.");
   }
 }
