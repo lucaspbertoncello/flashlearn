@@ -51,7 +51,16 @@ class CardController {
   }
 
   async delete(req, res) {
-    res.send("Deletando um...");
+    const { id } = req.params;
+
+    const cardExists = await CardRepository.findById(id);
+
+    if (!cardExists) {
+      return res.status(404).json({ error: "Flashcard not found" });
+    }
+
+    await CardRepository.deleteById(id);
+    res.sendStatus(204);
   }
 }
 

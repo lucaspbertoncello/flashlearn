@@ -49,6 +49,13 @@ class CardRepository {
     );
     return row;
   }
+
+  async deleteById(id) {
+    const deleteOp = await db.query(`DELETE FROM flashcards WHERE id = $1`, [
+      id,
+    ]);
+    return deleteOp;
+  }
 }
 
 module.exports = new CardRepository();
