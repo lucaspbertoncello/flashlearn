@@ -7,7 +7,9 @@ class CardController {
   }
 
   async show(req, res) {
-    res.send("Listando um...");
+    const { id } = req.params;
+    const card = await CardRepository.findById(id);
+    res.json(card);
   }
 
   async store(req, res) {
