@@ -14,7 +14,7 @@ router.delete("/decks/:id", DeckController.delete);
 router.get("/flashcards", CardController.index);
 router.get("/flashcards/:id", CardController.show);
 router.post("/flashcards", CardController.store);
-router.put("/flashcards", CardController.update);
-router.delete("/flashcards", CardController.delete);
+router.put("/flashcards/:id", CardController.update);
+router.delete("/flashcards/:id", CardController.delete);
 
 module.exports = router;
