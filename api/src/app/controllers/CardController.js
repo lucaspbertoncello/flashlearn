@@ -29,7 +29,25 @@ class CardController {
   }
 
   async update(req, res) {
-    res.send("Atualizando um...");
+    const { id } = req.params;
+    const { question, answer, deck_id } = req.body;
+
+    const deckExists = await CardRepository.findById(id);
+
+    if (!deckExists) {
+      return res.status(404).json({ error: "Flashcard not found" });
+    }
+
+    if (!question || !answer) {
+      return res.status(400).json({ error: "Fill all fields" });
+    }
+
+    const updatedCard = await CardRepository.update(
+      { question, answer, deck_id },
+      id
+    );
+
+    res.json(updatedCard);
   }
 
   async delete(req, res) {

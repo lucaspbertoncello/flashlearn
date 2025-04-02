@@ -36,6 +36,19 @@ class CardRepository {
     );
     return row;
   }
+
+  async update({ question, answer, deck_id }, id) {
+    const [row] = await db.query(
+      `
+        UPDATE flashcards
+        SET question = $1, answer = $2, deck_id = $3
+        WHERE id = $4
+        RETURNING *
+      `,
+      [question, answer, deck_id, id]
+    );
+    return row;
+  }
 }
 
 module.exports = new CardRepository();
