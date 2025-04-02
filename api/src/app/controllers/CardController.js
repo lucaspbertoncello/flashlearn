@@ -18,7 +18,14 @@ class CardController {
   }
 
   async store(req, res) {
-    res.send("Criando um...");
+    const { question, answer, deck_id } = req.body;
+
+    if (!question || !answer) {
+      return res.status(400).json({ error: "Question and Answer is required" });
+    }
+
+    const card = await CardRepository.create({ question, answer, deck_id });
+    res.json(card);
   }
 
   async update(req, res) {

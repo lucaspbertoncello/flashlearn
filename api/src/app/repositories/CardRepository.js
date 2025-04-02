@@ -24,6 +24,18 @@ class CardRepository {
     );
     return row;
   }
+
+  async create({ question, answer, deck_id }) {
+    const [row] = await db.query(
+      `
+      INSERT INTO flashcards(question, answer, deck_id)
+      VALUES($1, $2, $3)
+      RETURNING *
+      `,
+      [question, answer, deck_id]
+    );
+    return row;
+  }
 }
 
 module.exports = new CardRepository();
