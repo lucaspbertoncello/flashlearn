@@ -9,6 +9,11 @@ class CardController {
   async show(req, res) {
     const { id } = req.params;
     const card = await CardRepository.findById(id);
+
+    if (!card) {
+      return res.status(404).json({ error: "Flashcard not found" });
+    }
+
     res.json(card);
   }
 
